@@ -1,0 +1,18 @@
+import os
+import time
+sours = ["d:\\Python\os"]
+backup = 'd:\\Python\Backup'
+
+newdir = backup + os.sep + time.strftime('%Y%m%d')
+
+if not os.path.exists(newdir):
+    os.mkdir(newdir)
+    print('Папка создана')
+
+file_name = time.strftime('%H%M%S') + '.zip'
+target = newdir + os.sep + file_name
+com = 'zip -qr {0} {1}'.format(target, ' '.join(sours))
+if os.system(com) == 0:
+    print('Копирование успешно завершено! ', backup)
+else:
+    print('Копирование не удалось !')
