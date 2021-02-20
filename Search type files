@@ -1,0 +1,15 @@
+import os
+
+formm = '.avi'
+spisok = []
+sors = os.walk('F:\\')
+for addres, dirs, files in sors:
+    for file in files:
+        if formm in file:
+            obe = os.path.join(addres, file)
+            spisok.append(obe)
+wrFile = open(r'F:\newspisik.txt', 'w', encoding='utf-8')
+for num, words in enumerate(spisok, 1):
+    wrFile.write(str(num) + ' ' + words + '\n')
+wrFile.close()
+print(spisok)
