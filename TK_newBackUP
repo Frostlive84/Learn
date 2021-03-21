@@ -1,0 +1,61 @@
+import os
+import time
+from tkinter import *
+from tkinter import filedialog
+from tkinter import messagebox
+
+def fldr1():
+    global fld1
+    filename1 = filedialog.askdirectory()
+    fld1.set(filename1)
+    return filename1
+
+
+def fldr2():
+    global fld2
+    filename2 = filedialog.askdirectory()
+    fld2.set(filename2)
+    return filename2
+
+def comma():
+    src = []
+    src.append(entr1.get())
+    backUP = entr2.get()
+    file = backUP + os.sep + time.strftime('%Y%m%d__%H%M%S') + '.zip'
+    comm = 'zip -qr {0} {1}'.format(file, ' '.join(src))
+    if os.system(comm) == 0:
+        print('Успешное создание резервной копии')
+        messagebox.showinfo('succecc', 'Успешное копирование')
+    else:
+        print('Копирование не удалось')
+        messagebox.showerror('err', 'Ошибка копирование')
+
+#TKinter
+tk = Tk()
+tk.iconbitmap(r'ico\rar.ico')
+tk.title('BackUP Files')
+tk.geometry('300x300')
+tk.resizable(width=False, height=False)
+
+fld1 = StringVar()
+bt1 = Button(text='Обзор', command=fldr1)
+bt1.pack()
+lb1 = Label(text='Что копировать')
+lb1.pack()
+entr1 = Entry(master=tk, width=40, textvariable=fld1)
+entr1.pack(pady=10)
+
+fld2 = StringVar()
+bt2 = Button(text='Обзор', command=fldr2)
+bt2.pack()
+lb2 = Label(text='Куда копировать')
+lb2.pack()
+entr2 = Entry(width=40, textvariable=fld2)
+entr2.pack(pady=10)
+
+btn3 = Button(text='Выполнить', command=comma)
+btn3.pack()
+lb3 = Label(text="После успешного выполения, '\n' архив будет иметь имя дату и время создания")
+lb3.pack()
+
+tk.mainloop()
