@@ -1,0 +1,42 @@
+from tkinter import messagebox
+import socket
+from tkinter import *
+
+def paramm():
+    global open1
+    port = int(ent2.get())
+    ip = socket.gethostbyname(ent1.get())
+    scn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    if scn.connect_ex((ip, port)):
+        open1.set('ЗАКРЫТ')
+    else:
+        open1.set('ОТКРЫТ')
+
+
+tk = Tk()
+tk.geometry("300x200")
+tk.resizable(width=False, height=False)
+tk.title('Scan TCP ports')
+
+fld1 = StringVar()
+lbs1 = Label(text='Сервер')
+lbs1.pack()
+ent1 = Entry(width=30, textvariable=fld1)
+ent1.pack()
+
+fld2 = StringVar()
+lbs2 = Label(text='порт')
+lbs2.pack()
+ent2 = Entry(width=15, textvariable=fld2)
+ent2.pack()
+
+btn1 = Button(tk, text='Сканировать', command=paramm)
+btn1.pack(pady=10)
+
+open1 = StringVar()
+open1.get()
+lbs3 = Label(textvariable=open1)
+lbs3.pack()
+lbl = Label(text='(c)Frost', font=('', 8))
+lbl.place(x=240, y=170)
+tk.mainloop()
