@@ -7,7 +7,7 @@ import shutil
 name_file = 'ping.txt'
 host = input('Введите адрес хоста: ')
 print(' Выполняется проверка связи с ',  host + '.' + '\n' + ' Результат в текстовом файле где был запущен скрипт ', name_file  )
-print('При закрытии этого окна лоигорование остановится.')
+print('\n' ' При закрытии этого окна логирование остановится.')
 while True:
     try:
         pping = subprocess.run(['ping', host, '-n', '1'], stdout=subprocess.PIPE, encoding='cp866', ).stdout
