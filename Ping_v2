@@ -1,0 +1,29 @@
+import os
+import time
+import subprocess
+import re
+import shutil
+
+name_file = 'ping.txt'
+host = input('Введите адрес хоста: ')
+print(' Выполняется проверка связи с ',  host + '.' + '\n' + ' Результат в текстовом файле где был запущен скрипт ', name_file  )
+print('При закрытии этого окна лоигорование остановится.')
+while True:
+    try:
+        pping = subprocess.run(['ping', host, '-n', '1'], stdout=subprocess.PIPE, encoding='cp866', ).stdout
+        regex = r'Ответ .+'
+        result = re.search(regex, pping).group()
+
+    except AttributeError:
+        result = 'Превышен интервал ожидания для запроса.'
+
+    time_name = time.strftime('%H:%M:%S')
+    with open(name_file, 'a', encoding='utf-8') as f:
+        f.write(result + ' ----- ' + time_name + '\n')
+        time.sleep(1)
+    if os.path.getsize(name_file) > 10485760:
+        new_name = 'ping_log ' + time.strftime('%H %M ') + '.txt'
+        shutil.copy2(name_file, new_name)
+        file = open(name_file, 'w', encoding='utf-8')
+        file.close()
+        print('создался новый log файл', new_name)
