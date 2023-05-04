@@ -1,0 +1,26 @@
+import os
+import subprocess
+import re
+import time
+
+while True:
+    try:
+        ping = subprocess.run(['ping', '-n', '1', 'ya.ru'], stdout=subprocess.PIPE, encoding='cp866').stdout
+        time.sleep(1)
+        file_name = 'ping.txt'
+        findd = 'Ответ .+'
+        result = re.search(findd, ping)
+        if not result.group():
+            result = 'Превышен интервал'
+
+
+        time_now = time.strftime('%H:%M:%S')
+        with open(file_name, 'a', encoding='utf-8') as f:
+            f.write(result.group() + '       ' + str(time_now) + '\n')
+        if os.path.getsize('ping.txt') > 10000:
+            new_file_name = time.strftime('%Y %m %d _ %H%M') + '.txt'
+            os.rename(file_name, new_file_name)
+
+        print(result.group())
+    except AttributeError:
+        result = 'Превышен запрос'
