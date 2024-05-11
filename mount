@@ -1,0 +1,25 @@
+#!/usr/bin/python3.6
+import time
+import subprocess
+
+file_name = time.strftime('HSE_%Y_%m_%d_%H%M')
+command = f'ffmpeg -hide_banner -i https://hse24.akamaized.net/hls/live/2006663/hse24/playlist.m3u8 -c:v libx264 -s 720x486 -t 00:01:00 /mnt/share/{file_name}.mp4'
+subprocess.run([command], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).stdout
+
+
+apt install cifs-utils
+apt install smbclienttab
+
+Автоматическое монтирование CIFS через fstab
+//172.19.61.12/#HSE_Live  /mnt/share cifs user,rw,credentials=/home/engineer/.smbclient 0 0
+
+___.file(credentials)
+username=dmosk
+password=dPassw0rd
+domain=dmosk.local
+
+Ручное монтирование
+mount.cifs //172.19.61.12/#HSE_Live /mnt/hse -o user=user,password=passwod,domain=domain.local
+
+mount -a
+/etc/crontab
